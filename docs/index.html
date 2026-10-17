@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Auto Send Scheduler – שליחה מתוזמנת ל-Claude</title>
+<meta name="description" content="תוסף כרום שמקליד ושולח הודעה אוטומטית בזמן שתבחרו – בעוד כמה דקות או בשעה קבועה.">
+<style>
+:root{--bg:#fafaf9;--card:#fff;--field:#f3f3f1;--line:#e8e8e4;--text:#191919;--muted:#75756f;--pri:#191919;--pri-t:#fff}
+@media(prefers-color-scheme:dark){:root{--bg:#111;--card:#1a1a1a;--field:#242424;--line:#2b2b2b;--text:#ededeb;--muted:#9a9a95;--pri:#ededeb;--pri-t:#111}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased}
+.wrap{max-width:960px;margin:0 auto;padding:0 24px}
+nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px}
+.logo{width:30px;height:30px;border-radius:9px;background:var(--pri);display:grid;place-items:center}
+.logo svg{width:15px;height:15px;fill:none;stroke:var(--pri-t);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+nav a.link{color:var(--muted);text-decoration:none;font-size:14px}
+.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:48px;align-items:center;padding:56px 0 72px}
+h1{font-size:clamp(32px,5vw,50px);line-height:1.15;margin:0 0 18px;letter-spacing:-.02em}
+.lead{font-size:18px;color:var(--muted);margin:0 0 28px;max-width:520px}
+.btns{display:flex;gap:10px;flex-wrap:wrap}
+.btn{display:inline-block;padding:13px 22px;border-radius:12px;font-weight:600;font-size:15px;text-decoration:none;transition:opacity .15s}
+.btn.p{background:var(--pri);color:var(--pri-t)}.btn.s{background:var(--field);color:var(--text)}.btn:hover{opacity:.85}
+.mock{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 20px 50px -25px rgba(0,0,0,.25);max-width:290px;margin-inline:auto;width:100%}
+.mock .hd{display:flex;align-items:center;gap:9px;font-weight:650;font-size:14px;margin-bottom:12px}
+.mock .lbl{font-size:12px;color:var(--muted);margin-bottom:5px}
+.mock .fld{background:var(--field);border-radius:10px;padding:9px 11px;font-size:13px;margin-bottom:10px}
+.mock .fld.t{height:62px;color:var(--muted)}
+.mock .go{background:var(--pri);color:var(--pri-t);text-align:center;border-radius:10px;padding:10px;font-weight:600;font-size:13px}
+section{padding:64px 0;border-top:1px solid var(--line)}
+h2{font-size:28px;margin:0 0 8px;letter-spacing:-.01em}
+.sub{color:var(--muted);margin:0 0 36px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px}
+.card .n{width:28px;height:28px;border-radius:50%;background:var(--pri);color:var(--pri-t);display:grid;place-items:center;font-size:13px;font-weight:700;margin-bottom:12px}
+.card h3{margin:0 0 6px;font-size:17px}.card p{margin:0;color:var(--muted);font-size:15px}
+.grid.two{grid-template-columns:repeat(2,1fr)}
+.note{background:var(--field);border-radius:16px;padding:22px 24px}
+.note h3{margin:0 0 8px;font-size:17px}.note ul{margin:0;padding-inline-start:20px;color:var(--muted);font-size:15px}
+pre{direction:ltr;text-align:left;background:var(--pri);color:var(--pri-t);border-radius:14px;padding:18px;overflow-x:auto;font-size:14px;margin:0 0 16px}
+ol.steps{padding-inline-start:22px;color:var(--muted);margin:0 0 24px}ol.steps li{margin-bottom:6px}ol.steps b{color:var(--text)}
+footer{border-top:1px solid var(--line);padding:28px 0 40px;color:var(--muted);font-size:14px;text-align:center}
+@media(max-width:760px){.hero{grid-template-columns:1fr;gap:36px;padding:32px 0 48px}.grid,.grid.two{grid-template-columns:1fr}section{padding:48px 0}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav>
+  <div class="brand"><div class="logo"><svg viewBox="0 0 24 24"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7z"/></svg></div>Auto Send Scheduler</div>
+  <a class="link" href="#install">התקנה</a>
+</nav>
+
+<header class="hero">
+  <div>
+    <h1>שולחים את ההודעה.<br>בזמן שאתם בוחרים.</h1>
+    <p class="lead">תוסף כרום שמקליד ושולח הודעה בשבילכם – בעוד כמה דקות או בשעה קבועה. נבנה לשימוש עם Claude, וצריך רק טאב פתוח.</p>
+    <div class="btns"><a class="btn p" href="#install">להתקנה</a><a class="btn s" href="#how">איך זה עובד</a></div>
+  </div>
+  <div class="mock" aria-hidden="true">
+    <div class="hd"><div class="logo"><svg viewBox="0 0 24 24"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7z"/></svg></div>שליחה מתוזמנת</div>
+    <div class="lbl">תוכן ההודעה</div><div class="fld t">הכנס את הטקסט לשליחה...</div>
+    <div class="lbl">מתי לשלוח</div><div class="fld">בשעה מסוימת</div>
+    <div class="lbl">שעה</div><div class="fld">07:30</div>
+    <div class="go">תזמן הפעלה</div>
+  </div>
+</header>
+
+<section id="how">
+  <h2>שלושה צעדים</h2><p class="sub">בלי הגדרות מורכבות ובלי שרת.</p>
+  <div class="grid">
+    <div class="card"><div class="n">1</div><h3>פותחים את הטאב</h3><p>נכנסים לשיחה שבה רוצים לשלוח, ולוחצים על אייקון התוסף.</p></div>
+    <div class="card"><div class="n">2</div><h3>כותבים ובוחרים זמן</h3><p>מקלידים הודעה ובוחרים: בעוד כמה דקות, או בשעה ביום.</p></div>
+    <div class="card"><div class="n">3</div><h3>ממשיכים בחיים</h3><p>אפשר לעבור לטאב אחר או לצמצם את החלון. בזמן היעד ההודעה נשלחת.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>למה זה שימושי</h2><p class="sub">כשצריך שההודעה תצא ואתם לא מול המחשב.</p>
+  <div class="grid two">
+    <div class="card"><h3>משימות ארוכות בלילה</h3><p>מכינים הכול מראש ושולחים בבוקר, בלי להישאר ערים.</p></div>
+    <div class="card"><h3>מכסה שמתחדשת</h3><p>מתזמנים הודעה לרגע שבו מכסת השימוש חוזרת.</p></div>
+    <div class="card"><h3>שעה קבועה</h3><p>הודעה יומית או הנחיה קבועה שיוצאת בזמן שהגדרתם.</p></div>
+    <div class="card"><h3>פרטי לגמרי</h3><p>הכול רץ בדפדפן. ההודעה נשמרת מקומית ולא נשלחת לשום שרת.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>למה התוסף שולח באמינות</h2><p class="sub">לא עוד טיימר בתוך הדף.</p>
+  <div class="grid two">
+    <div class="card"><h3>תזמון מחוץ לדף</h3><p>התזמון נשען על התראות של כרום, ולא על טיימר שמואט כשהטאב ברקע.</p></div>
+    <div class="card"><h3>לחיצת מקלדת אמיתית</h3><p>השליחה נעשית בלחיצת Ctrl+Enter אמיתית, כך שאתרים שמתעלמים מלחיצות מדומות יקבלו אותה.</p></div>
+    <div class="card"><h3>טאב שנסגר? נפתח מחדש</h3><p>התוסף שומר את הכתובת ופותח אותה ברקע אם הטאב כבר לא קיים.</p></div>
+    <div class="card"><h3>משימה באיחור</h3><p>אם המחשב ישן בזמן היעד, ההודעה תישלח כשהדפדפן יחזור לפעול.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>כדאי לדעת</h2><p class="sub">ישירות, בלי הבטחות מיותרות.</p>
+  <div class="note">
+    <h3>מגבלות</h3>
+    <ul>
+      <li>כרום צריך להיות פעיל והמחשב דלוק. כרום סגור לגמרי או מחשב כבוי – אין שליחה.</li>
+      <li>משימה אחת לכל טאב.</li>
+      <li>התוסף עדיין לא נבדק מקצה לקצה על claude.ai, וייתכנו התאמות קטנות באופן הכנסת הטקסט והשליחה.</li>
+      <li>הרשאת הדיבוג חזקה, ובזמן השליחה יופיע בטאב לרגע פס "התוסף מבצע דיבוג".</li>
+    </ul>
+  </div>
+</section>
+
+<section id="install">
+  <h2>התקנה</h2><p class="sub">דקה אחת, ללא חנות.</p>
+  <ol class="steps">
+    <li><b>מורידים</b> את הפרויקט ומחלצים לתיקייה.</li>
+    <li>אם חסרה התיקייה <b>icons</b>, מריצים פעם אחת:</li>
+  </ol>
+  <pre>pip install pillow
+python scripts/generate_icons.py</pre>
+  <ol class="steps" start="3">
+    <li>נכנסים ל-<b>chrome://extensions</b> ומפעילים "מצב מפתח".</li>
+    <li>לוחצים <b>"טען תוסף לא ארוז"</b> ובוחרים את התיקייה.</li>
+    <li>מאשרים את ההרשאות, ומצמידים את האייקון לסרגל הכלים.</li>
+  </ol>
+</section>
+</div>
+<footer>Auto Send Scheduler · תוסף כרום קוד פתוח לתזמון שליחה</footer>
+</body>
+</html>
